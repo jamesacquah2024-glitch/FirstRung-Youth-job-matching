@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FirstRung – Youth job matching</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f4ef;--surf:#fff;--ink:#1b1d2a;--mute:#626678;--line:#dcdbd2;--acc:#3a3fd6;--onacc:#fff;--hi:#1f8f5f;--mid:#b27a00;--lo:#8a8d9c;--chip:#ebeaf7;--chipon:#3a3fd6;--chipontx:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14151d;--surf:#1d1f2b;--ink:#eeeef4;--mute:#a1a5b8;--line:#33364a;--acc:#8f93ff;--onacc:#14151d;--hi:#59d79c;--mid:#e8b43c;--lo:#8d90a3;--chip:#2a2d44;--chipon:#8f93ff;--chipontx:#14151d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14151d;--surf:#1d1f2b;--ink:#eeeef4;--mute:#a1a5b8;--line:#33364a;--acc:#8f93ff;--onacc:#14151d;--hi:#59d79c;--mid:#e8b43c;--lo:#8d90a3;--chip:#2a2d44;--chipon:#8f93ff;--chipontx:#14151d;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Figtree,system-ui,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:20px 16px 64px}
+h1,h2,h3{font-family:'Bricolage Grotesque',Figtree,sans-serif;line-height:1.1;margin:0}
+h1{font-size:2.1rem;font-weight:800}h2{font-size:1.3rem;margin-bottom:10px}h3{font-size:1.1rem}
+.sub{color:var(--mute);margin:8px 0 18px;max-width:52ch}
+nav{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+nav button{background:none;border:0;color:var(--mute);font:600 15px Figtree,sans-serif;padding:10px 12px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+nav button.on{color:var(--ink);border-color:var(--acc)}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+input,select{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:480px){.row{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--chip);color:var(--ink);padding:6px 11px;border-radius:99px;font:600 13px Figtree,sans-serif;cursor:pointer}
+.chip.on{background:var(--chipon);color:var(--chipontx);border-color:var(--chipon)}
+.btn{background:var(--acc);color:var(--onacc);border:0;border-radius:10px;padding:12px 18px;font:700 15px Figtree,sans-serif;cursor:pointer;margin-top:16px}
+.btn.alt{background:none;color:var(--acc);border:1px solid var(--acc);padding:8px 14px;margin:0}
+.btn:focus-visible,.chip:focus-visible,nav button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.score{font:800 1.7rem 'Bricolage Grotesque',sans-serif;text-align:right;flex:none}
+.score small{display:block;font:600 12px Figtree,sans-serif}
+.hi{color:var(--hi)}.mid{color:var(--mid)}.lo{color:var(--lo)}
+.bar{height:8px;border-radius:9px;background:var(--line);margin:10px 0;overflow:hidden}.bar i{display:block;height:100%;background:currentColor}
+.meta{color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-size:13px;padding:2px 9px;border-radius:7px;margin:3px 4px 0 0;border:1px solid var(--line)}
+.tag.ok{border-color:var(--hi);color:var(--hi)}.tag.gap{border-color:var(--mid);color:var(--mid)}
+.tip{font-size:14px;margin:8px 0 0;padding-left:10px;border-left:3px solid var(--line);color:var(--mute)}
+.hide{display:none}.note{font-size:13px;color:var(--mute)}
+.empty{text-align:center;padding:30px 10px;color:var(--mute)}
+</style></head><body><div class="w">
+<h1>FirstRung</h1>
+<p class="sub">Tell us what you can do. We rank open jobs by how well they fit you, and show what to learn to reach the ones just out of range.</p>
+<nav role="tablist"><button class="on" data-t="find">Find jobs</button><button data-t="post">Post a job</button><button data-t="how">How it works</button></nav>
+
+<section id="find">
+<div class="card" id="form">
+<h2>Your profile</h2>
+<label for="nm">First name</label><input id="nm" placeholder="e.g. Amara" autocomplete="given-name">
+<div class="row">
+<div><label for="ed">Highest education</label><select id="ed"><option value="0">No formal qualification</option><option value="1" selected>Secondary school</option><option value="2">Diploma / certificate</option><option value="3">Degree</option></select></div>
+<div><label for="lc">Where you live</label><select id="lc"></select></div>
+<div><label for="ty">Looking for</label><select id="ty"><option value="any">Any type</option><option>Full-time</option><option>Part-time</option><option>Internship</option><option>Apprenticeship</option></select></div>
+<div><label for="rl">Can you move or commute?</label><select id="rl"><option value="0">Only near me</option><option value="1">Yes, I can travel</option></select></div>
+</div>
+<label>Skills you have (tap all that apply)</label><div class="chips" id="sk"></div>
+<button class="btn" id="go">Show my matches</button>
+</div>
+<div id="res"></div>
+</section>
+
+<section id="post" class="hide">
+<div class="card">
+<h2>Post a job</h2>
+<label for="pt">Job title</label><input id="pt" placeholder="e.g. Shop assistant">
+<div class="row">
+<div><label for="pc">Company</label><input id="pc"></div>
+<div><label for="pl">Location</label><input id="pl" placeholder="e.g. Riverside"></div>
+<div><label for="pe">Minimum education</label><select id="pe"><option value="0">None needed</option><option value="1">Secondary school</option><option value="2">Diploma / certificate</option><option value="3">Degree</option></select></div>
+<div><label for="py">Type</label><select id="py"><option>Full-time</option><option>Part-time</option><option>Internship</option><option>Apprenticeship</option></select></div>
+</div>
+<label for="pp">Pay (optional)</label><input id="pp" placeholder="e.g. 250 / week">
+<label>Required skills</label><div class="chips" id="psr"></div>
+<label>Nice-to-have skills</label><div class="chips" id="psn"></div>
+<label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="pr" style="width:auto"> Remote work possible</label>
+<button class="btn" id="pub">Add job</button><p class="note" id="pmsg" role="status"></p>
+</div></section>
+
+<section id="how" class="hide"><div class="card">
+<h2>How matching works</h2>
+<p>Each job gets a score out of 100:</p>
+<p><b>50 points</b> – required skills you have. Related skills count part-way, so “Sales” helps with “Customer service”.<br>
+<b>15 points</b> – nice-to-have skills.<br>
+<b>15 points</b> – location, or remote work.<br>
+<b>10 points</b> – education level.<br>
+<b>10 points</b> – job type you asked for.</p>
+<p>Every score comes with reasons and the skills you are missing, so you can see what to build next. This demo keeps data in your browser session only. To use it for real, connect the job list to a database and replace the skill-similarity table with text embeddings.</p>
+</div></section>
+</div>
+<script>
+var SK=["Customer service","Communication","Cash handling","Data entry","MS Office","Social media","Basic coding","Graphic design","Driving","Teamwork","Sales","Cooking","Teaching","Mechanics","Sewing","Photography","Writing","Languages","First aid","Farming"];
+var FAM=[["Customer service","Communication","Sales","Languages","Teamwork"],["Data entry","MS Office","Basic coding"],["Social media","Graphic design","Photography","Writing"],["Cooking","Farming"],["Mechanics","Driving"],["Teaching","Communication","First aid"],["Cash handling","Sales"]];
+var ED=["No formal qualification","Secondary school","Diploma / certificate","Degree"];
+var TIPS={"Customer service":"Free short courses on customer care take about a week.","Cash handling":"Ask a local shop to let you shadow the till for a day.","Data entry":"Practise typing speed on free tools; aim for 40 words per minute.","MS Office":"Free spreadsheet and word-processing tutorials cover the basics.","Social media":"Run a small page for a local group to build a portfolio.","Basic coding":"Start with free HTML and JavaScript lessons.","Graphic design":"Make five sample posters with a free design tool.","Driving":"A licence is often the main barrier; check training grants.","Sales":"Try selling at a market stall or for a friend's business.","Communication":"Practise with mock interviews with a friend.","Teamwork":"Volunteering is a quick way to show this.","Cooking":"Offer to cook at community events for reference.","Teaching":"Tutor a younger student and ask for a short reference.","Mechanics":"Ask a garage about apprentice helpers.","Sewing":"Make sample items and photograph them.","Photography":"Build a ten-photo portfolio on your phone.","Writing":"Write three short sample pieces.","Languages":"List every language you speak and your level.","First aid":"Red Cross and similar groups run free courses.","Farming":"Local cooperatives often take trainees."};
+var JOBS=[
+{t:"Shop assistant",co:"FreshMart",loc:"Downtown",ty:"Full-time",ed:1,req:["Customer service","Cash handling"],nice:["Sales","Teamwork"],pay:"220 / week"},
+{t:"Data entry clerk",co:"Brightline Logistics",loc:"North District",ty:"Full-time",ed:1,req:["Data entry","MS Office"],nice:["Communication"],pay:"260 / week"},
+{t:"Social media assistant",co:"Pulse Studio",loc:"Remote",ty:"Part-time",ed:1,req:["Social media","Writing"],nice:["Graphic design","Photography"],pay:"150 / week",rem:1},
+{t:"Junior web developer trainee",co:"Kilnworks Tech",loc:"Downtown",ty:"Internship",ed:2,req:["Basic coding"],nice:["MS Office","Graphic design"],pay:"180 / week"},
+{t:"Delivery rider",co:"QuickDrop",loc:"Eastside",ty:"Part-time",ed:0,req:["Driving"],nice:["Customer service","Communication"],pay:"Per delivery"},
+{t:"Kitchen assistant",co:"Harvest Table Café",loc:"Riverside",ty:"Full-time",ed:0,req:["Cooking"],nice:["Teamwork","First aid"],pay:"200 / week"},
+{t:"Auto mechanic apprentice",co:"Eastside Motors",loc:"Eastside",ty:"Apprenticeship",ed:1,req:["Mechanics"],nice:["Driving","Teamwork"],pay:"140 / week"},
+{t:"Call centre agent",co:"ConnectPoint",loc:"North District",ty:"Full-time",ed:1,req:["Customer service","Communication"],nice:["Languages","MS Office"],pay:"280 / week"},
+{t:"Teaching assistant",co:"Greenfield Primary",loc:"Riverside",ty:"Part-time",ed:2,req:["Teaching","Communication"],nice:["First aid","Languages"],pay:"170 / week"},
+{t:"Tailor's assistant",co:"Stitch & Co",loc:"Downtown",ty:"Apprenticeship",ed:0,req:["Sewing"],nice:["Customer service","Sales"],pay:"120 / week"},
+{t:"Farm hand",co:"Riverbend Growers",loc:"Riverside",ty:"Full-time",ed:0,req:["Farming"],nice:["Driving","Teamwork"],pay:"190 / week"},
+{t:"Content creator (remote)",co:"Loop Media",loc:"Remote",ty:"Part-time",ed:1,req:["Photography","Social media"],nice:["Writing","Graphic design"],pay:"200 / week",rem:1}];
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function chips(id,sel){var h="";SK.forEach(function(s){h+='<button type="button" class="chip" aria-pressed="false" data-s="'+esc(s)+'">'+esc(s)+'</button>'});$(id).innerHTML=h;sel.push(id)}
+var made=[];["sk","psr","psn"].forEach(function(i){chips(i,made)});
+document.querySelectorAll(".chips").forEach(function(c){c.addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;b.classList.toggle("on");b.setAttribute("aria-pressed",b.classList.contains("on"))})});
+function picked(id){return Array.prototype.map.call($(id).querySelectorAll(".chip.on"),function(b){return b.dataset.s})}
+function locs(){var s={};JOBS.forEach(function(j){if(!j.rem)s[j.loc]=1});return Object.keys(s)}
+function fillLoc(){var cur=$("lc").value,h="";locs().forEach(function(l){h+="<option>"+esc(l)+"</option>"});$("lc").innerHTML=h;if(cur)$("lc").value=cur}
+fillLoc();
+function related(a,b){return FAM.some(function(f){return f.indexOf(a)>-1&&f.indexOf(b)>-1})}
+function cover(need,have){if(!need.length)return{p:1,ok:[],gap:[]};var tot=0,ok=[],gap=[];need.forEach(function(n){if(have.indexOf(n)>-1){tot+=1;ok.push(n)}else if(have.some(function(h){return related(h,n)})){tot+=.4;gap.push(n+" (related skill)")}else gap.push(n)});return{p:tot/need.length,ok:ok,gap:gap}}
+function score(j,u){var r=cover(j.req,u.sk),n=cover(j.nice,u.sk);
+var ed=u.ed>=j.ed?1:(u.ed===j.ed-1?.5:0);
+var lc=j.rem?1:(j.loc===u.lc?1:(u.rl?.6:0));
+var ty=(u.ty==="any"||u.ty===j.ty)?1:.3;
+var s=Math.round(100*(.5*r.p+.15*n.p+.15*lc+.1*ed+.1*ty));
+var why=[];if(r.ok.length)why.push("You have "+r.ok.length+" of "+j.req.length+" required skills.");
+if(lc===1)why.push(j.rem?"Works from anywhere.":"In your area.");else if(lc>0)why.push("Outside your area, but you can travel.");else why.push("Outside your area.");
+if(ed<1)why.push("Asks for "+ED[j.ed].toLowerCase()+".");
+if(ty<1)why.push("Not the job type you asked for.");
+return{s:s,r:r,n:n,why:why}}
+function render(){var u={nm:$("nm").value.trim(),ed:+$("ed").value,lc:$("lc").value,ty:$("ty").value,rl:+$("rl").value,sk:picked("sk")};
+if(!u.sk.length){$("res").innerHTML='<div class="card empty">Pick at least one skill so we can match you. Everyone has some: think about school, home, church or community work.</div>';return}
+var L=JOBS.map(function(j){return{j:j,m:score(j,u)}}).sort(function(a,b){return b.m.s-a.m.s});
+var h="<h2>"+(u.nm?esc(u.nm)+", here are":"Here are")+" your matches</h2>";
+L.forEach(function(x,i){var j=x.j,m=x.m,c=m.s>=70?"hi":(m.s>=45?"mid":"lo"),lab=m.s>=70?"Strong match":(m.s>=45?"Possible match":"Stretch");
+var gaps=m.r.gap.concat(m.n.gap.filter(function(g){return m.r.gap.indexOf(g)<0}));
+h+='<article class="card"><div class="top"><div><h3>'+esc(j.t)+'</h3><div class="meta">'+esc(j.co)+" · "+esc(j.loc)+" · "+esc(j.ty)+(j.pay?" · "+esc(j.pay):"")+'</div></div><div class="score '+c+'">'+m.s+'%<small>'+lab+'</small></div></div>';
+h+='<div class="bar '+c+'" role="img" aria-label="Match '+m.s+' percent"><i style="width:'+m.s+'%"></i></div>';
+m.r.ok.concat(m.n.ok).forEach(function(s){h+='<span class="tag ok">✓ '+esc(s)+'</span>'});
+gaps.forEach(function(s){h+='<span class="tag gap">Missing: '+esc(s)+'</span>'});
+h+='<p class="meta" style="margin:10px 0 0">'+esc(m.why.join(" "))+'</p>';
+var first=m.r.gap[0]||m.n.gap[0];if(first&&m.s<100){var k=first.replace(" (related skill)","");h+='<p class="tip"><b>Close the gap:</b> '+esc(TIPS[k]||"Look for a short course or volunteer role.")+'</p>'}
+h+='<button class="btn alt" style="margin-top:12px" data-a="'+i+'">Save this job</button></article>'});
+$("res").innerHTML=h;$("res").scrollIntoView({behavior:"smooth"})}
+$("go").onclick=render;
+$("res").addEventListener("click",function(e){var b=e.target.closest("[data-a]");if(b){b.textContent="Saved ✓";b.disabled=true}});
+$("pub").onclick=function(){var t=$("pt").value.trim(),l=$("pl").value.trim(),rem=$("pr").checked;
+if(!t||(!l&&!rem)){$("pmsg").textContent="Add a job title and a location, or tick remote.";return}
+var rq=picked("psr");if(!rq.length){$("pmsg").textContent="Pick at least one required skill.";return}
+JOBS.unshift({t:t,co:$("pc").value.trim()||"Independent employer",loc:rem?"Remote":l,ty:$("py").value,ed:+$("pe").value,req:rq,nice:picked("psn").filter(function(s){return rq.indexOf(s)<0}),pay:$("pp").value.trim(),rem:rem?1:0});
+fillLoc();$("pmsg").textContent="Added. Go to Find jobs and press Show my matches to see it ranked.";["pt","pc","pl","pp"].forEach(function(i){$(i).value=""})};
+document.querySelector("nav").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("on",x===b)});["find","post","how"].forEach(function(s){$(s).classList.toggle("hide",s!==b.dataset.t)})});
+</script></body></html>
